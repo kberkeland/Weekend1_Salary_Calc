@@ -10,6 +10,7 @@ class Employee{
   
 let employeeArray = [];
 let tableHeaders = '<tr>' + '<th>' + 'First Name' + '</th>' + '<th>' + 'Last Name' + '</th>' + '<th>' + 'ID' + '</th>' + '<th>' + 'Title' + '</th>' + '<th>' + 'Annual Salary' + '</th>' + '</tr>';
+let monthlySalaryTotal;
 
 $ ( document ).ready( function() {
     console.log('DOM ready');
@@ -40,6 +41,9 @@ function addEmployee() {
     // run functions to clear the input fields and display employees
     clearInput();
     showEmployee();
+
+    monthlySalaryTotal = monthlySalary();
+    $( '#monthlySalary' ).html('<div>' + monthlySalaryTotal + '</div>');
 
   } // end addEmployee
   
@@ -76,6 +80,13 @@ function showEmployee() {
     } // end for of
 } // end showEmployee
 
+function monthlySalary() {
+    let yearTotal = 0;
+    for( employee of employeeArray ) {
+        yearTotal += employee.annualSalary;
+    }
+    return yearTotal / 12;
+}
 
 // old show employee // function to display employees on a table
 // function showEmployee() {

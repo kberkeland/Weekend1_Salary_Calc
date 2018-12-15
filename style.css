@@ -19,3 +19,7 @@ tr {
     padding: 15px;
     border-spacing: 5px;
 }
+
+.salary-class {
+    justify-content: right;
+}
