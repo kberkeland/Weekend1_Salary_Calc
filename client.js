@@ -15,6 +15,8 @@ let monthlySalaryTotal;
 $ ( document ).ready( function() {
     console.log('DOM ready');
     
+    $ ( '#employeeTable' ).append(tableHeaders);
+
     $ ( '#addEmployeeButton' ).on( 'click', addEmployee );
 
     $ ( '#employeeTable' ).on('click', '.delete', removeFromArray);
