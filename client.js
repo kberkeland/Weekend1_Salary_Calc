@@ -19,7 +19,6 @@ $ ( document ).ready( function() {
 
     $ ( '#employeeTable' ).on('click', '.delete', removeFromArray);
 
-
   }); // end document ready
   
   
@@ -44,9 +43,7 @@ function addEmployee() {
     // run functions to clear the input fields and display employees
     clearInput();
     showEmployee();
-
-    monthlySalaryTotal = monthlySalary();
-    $( '#monthlySalary' ).html('<div>' + monthlySalaryTotal + '</div>');
+    monthlySalaryDisplay();
 
   } // end addEmployee
   
@@ -84,6 +81,11 @@ function showEmployee() {
     } // end for of
 } // end showEmployee
 
+function monthlySalaryDisplay() {
+    monthlySalaryTotal = monthlySalary();
+    $( '#monthlySalary' ).html('<div>' + monthlySalaryTotal + '</div>');
+} // end monthlySalaryDisplay
+
 function monthlySalary() {
     let yearTotal = 0;
     for( employee of employeeArray ) {
@@ -118,25 +120,5 @@ function removeEmployee(rowToDelete) {
         } // end if
     } // end for in
     showEmployee();
+    monthlySalaryDisplay();
 } // end removeEmployee
-
-// old show employee // function to display employees on a table
-// function showEmployee() {
-//     // let outputElement = $ ( '#employeeTableRow' );
-//     // outputElement.empty();
-//     // for ( employee of employeeArray) {
-//     //   outputElement.append( '<tr>' + 
-//     //     '<td>' + employee.firstName + '</td>' +
-//     //     '<td>' + employee.lastName + '</td>' +
-//     //     '<td>' + employee.idNumber + '</td>' +
-//     //     '<td>' + employee.title + '</td>' +
-//     //     '<td>' + employee.annualSalary + '</td>' + '</tr>');
-//     // } // end for of
-// } // end showEmployee
-
-//   // add display message function
-//   function displayMessage( text ) {
-//     let outputError = $ ( '#errorMessage' );
-//     outputError.empty();
-//     outputError.append( '<p>' + text + '</p>' );
-//   }
