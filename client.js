@@ -9,13 +9,16 @@ class Employee{
 } // end Employee class
   
 let employeeArray = [];
-let tableHeaders = '<tr>' + '<th>' + 'First Name' + '</th>' + '<th>' + 'Last Name' + '</th>' + '<th>' + 'ID' + '</th>' + '<th>' + 'Title' + '</th>' + '<th>' + 'Annual Salary' + '</th>' + '</tr>';
+let tableHeaders = '<tr>' + '<th>' + 'First Name' + '</th>' + '<th>' + 'Last Name' + '</th>' + '<th>' + 'ID' + '</th>' + '<th>' + 'Title' + '</th>' + '<th>' + 'Annual Salary' + '</th>' + '<th>' + 'Delete Row?' + '</th>' + '</tr>';
 let monthlySalaryTotal;
 
 $ ( document ).ready( function() {
     console.log('DOM ready');
     
     $ ( '#addEmployeeButton' ).on( 'click', addEmployee );
+
+    $ ( '#employeeTable' ).on('click', '.delete', removeFromArray);
+
 
   }); // end document ready
   
@@ -76,7 +79,8 @@ function showEmployee() {
         '<td>' + employee.lastName + '</td>' +
         '<td>' + employee.idNumber + '</td>' +
         '<td>' + employee.title + '</td>' +
-        '<td>' + employee.annualSalary + '</td>' + '</tr>');
+        '<td>' + employee.annualSalary + '</td>' + 
+        '<td>' + '<button class ="delete">X</button>' + '</tr>');
     } // end for of
 } // end showEmployee
 
@@ -87,6 +91,34 @@ function monthlySalary() {
     }
     return yearTotal / 12;
 }
+
+function removeFromArray() {
+    console.log('Remove the row');
+    console.log(this);
+    let rowToRemove =  $(this).parent().siblings().text();
+    console.log(rowToRemove);
+    // console.log(test.search('12'));
+    removeEmployee(rowToRemove);
+    // this is the thing that was clicked on
+    // $(this).parent().siblings().remove();
+    // $(this).parent().remove();
+    // parent() will be the li we want to remove
+}
+
+function removeEmployee(rowToDelete) {
+    for( let i in employeeArray ) {
+        let currentEmployee =   employeeArray[i].firstName + 
+                                employeeArray[i].lastName + 
+                                employeeArray[i].idNumber +
+                                employeeArray[i].title +
+                                employeeArray[i].annualSalary;
+        // console.log(test2);
+        if( rowToDelete == currentEmployee ) {
+            employeeArray.splice(i, 1);
+        } // end if
+    } // end for in
+    showEmployee();
+} // end removeEmployee
 
 // old show employee // function to display employees on a table
 // function showEmployee() {
