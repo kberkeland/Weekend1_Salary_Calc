@@ -78,24 +78,30 @@ function showEmployee() {
         '<td>' + employee.lastName + '</td>' +
         '<td>' + employee.idNumber + '</td>' +
         '<td>' + employee.title + '</td>' +
-        '<td>' + employee.annualSalary + '</td>' + 
+        '<td>' + formatter.format(employee.annualSalary) + '</td>' + 
         '<td>' + '<button class ="delete">X</button>' + '</tr>');
     } // end for of
 } // end showEmployee
 
+// Displays the monthly total
 function monthlySalaryDisplay() {
     monthlySalaryTotal = monthlySalary();
-    $( '#monthlySalary' ).html('<div>' + monthlySalaryTotal + '</div>');
+    let totalSalaryOut = '<div class=".float-right">' + 
+                         'Monthly total: ' + monthlySalaryTotal + '</div>'
+    $( '#monthlySalary' ).html(totalSalaryOut);
 } // end monthlySalaryDisplay
 
+// Totals the monthly expenditure
 function monthlySalary() {
     let yearTotal = 0;
     for( employee of employeeArray ) {
         yearTotal += employee.annualSalary;
     }
-    return yearTotal / 12;
+    yearTotal = yearTotal / 12;
+    return formatter.format(yearTotal);
 }
 
+// Removes a line from the table when delete is clicked. Calls a function to remove the row from employeeArray.
 function removeFromArray() {
     console.log('Remove the row');
     console.log(this);
@@ -109,6 +115,7 @@ function removeFromArray() {
     // parent() will be the li we want to remove
 }
 
+// Removes an employee from employeeArray
 function removeEmployee(rowToDelete) {
     for( let i in employeeArray ) {
         let currentEmployee =   employeeArray[i].firstName + 
@@ -124,3 +131,12 @@ function removeEmployee(rowToDelete) {
     showEmployee();
     monthlySalaryDisplay();
 } // end removeEmployee
+
+// Create our number formatter. - Stolen from the internet
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    // the default value for minimumFractionDigits depends on the currency
+    // and is usually already 2
+});

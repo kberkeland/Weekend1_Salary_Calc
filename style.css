@@ -4,6 +4,7 @@ html, body {
     padding-top: 10px;
     max-width: 768px;
     margin: 0px auto;
+    background-color: grey
 }
 
 table, th, td {
@@ -13,6 +14,12 @@ table, th, td {
 h1 {
     text-align: center;
     background-color: lemonchiffon;
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    background-color: maroon;
 }
 
 th {
@@ -36,3 +43,7 @@ tr {
 .salary-class {
     float: right;
 }
+
+.spacer5 {
+    height: 5px;
+  }
