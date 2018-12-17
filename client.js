@@ -49,7 +49,6 @@ function addEmployee() {
 
 // Creates an entry in the employeeArray
 function newEmployee( firstName, lastName, idNumber, title, annualSalary ){
-    console.log( 'in newEmployee:', firstName, lastName, idNumber, title, annualSalary );
     employeeArray.push( new Employee( firstName, lastName, parseFloat(idNumber), title, parseFloat(annualSalary) ) );
     return true;
 } // end newEmployee
@@ -83,8 +82,12 @@ function showEmployee() {
 // Displays the monthly total
 function monthlySalaryDisplay() {
     monthlySalaryTotal = monthlySalary();
-    let totalSalaryOut = '<div>' + 'Monthly total: ' + monthlySalaryTotal + '</div>'
-    $( '#monthlySalary' ).html(totalSalaryOut);
+    let totalSalaryOut = '<div>' + 'Monthly total: ' + formatter.format(monthlySalaryTotal) + '</div>'
+    if( monthlySalaryTotal > 20000 ) {
+        $( '#monthlySalary' ).html(totalSalaryOut).css('background-color','red');
+    } else {
+        $( '#monthlySalary' ).html(totalSalaryOut).css('background-color','ivory');
+    } // end if
 } // end monthlySalaryDisplay
 
 // Totals the monthly expenditure
@@ -93,8 +96,7 @@ function monthlySalary() {
     for( employee of employeeArray ) {
         yearTotal += employee.annualSalary;
     }
-    yearTotal = yearTotal / 12;
-    return formatter.format(yearTotal);
+    return yearTotal / 12;
 }
 
 // Removes a line from the table when delete is clicked. Calls a function to remove the row from employeeArray.
