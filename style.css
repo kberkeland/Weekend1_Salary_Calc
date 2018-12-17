@@ -7,10 +7,6 @@ html, body {
     background-color: grey
 }
 
-table, th, td {
-    border: 1px solid black;
-}
-
 h1 {
     text-align: center;
     background-color: lemonchiffon;
@@ -19,29 +15,13 @@ h1 {
 }
 
 h3 {
-    background-color: maroon;
-}
-
-th {
-    border: 1px solid black;
-    padding: 15px;
-    border-spacing: 5px;
-}
-
-td {
-    border: 1px solid black;
-    padding: 15px;
-    border-spacing: 5px;
-}
-
-tr {
-    border: 1px solid black;
-    padding: 15px;
-    border-spacing: 5px;
+    background-color: white;
+    margin: 5px;
 }
 
 .salary-class {
     float: right;
+    background-color: lightpink;
 }
 
 .spacer5 {

@@ -19,26 +19,24 @@ $ ( document ).ready( function() {
 
     $ ( '#addEmployeeButton' ).on( 'click', addEmployee );
 
-    $ ( '#employeeTable' ).on('click', '.delete', removeFromArray);
+    $ ( '#employeeTable' ).on( 'click', '#delete', removeFromArray);
 
-  }); // end document ready
+}); // end document ready
   
-  
-function newEmployee( firstName, lastName, idNumber, title, annualSalary ){
-    console.log( 'in newEmployee:', firstName, lastName, idNumber, title, annualSalary );
-    employeeArray.push( new Employee( firstName, lastName, parseFloat(idNumber), title, parseFloat(annualSalary) ) );
-    return true;
-} // end newEmployee
-  
-// function for adding a car to garage array
+// Adds an employee to an array and displays on the DOM in a table.
 function addEmployee() {
     // displayMessage('');
     if ( $( '#firstNameIn' ).val() == '' || $( '#lastNameIn' ).val() == '' || $( '#idNumberIn' ).val() == '' || $( '#titleIn' ).val() == '' || $( '#annualSalaryIn' ).val() == '') {
         // display an error message because one of the fields is empty
-        displayMessage('Please try again, there is a value missing.');
+        headerMessage(' - One of the fields is missing');
+        return false;
+    } else if ( isNaN($( '#annualSalaryIn' ).val()) ) {
+        // display an error message because Annual Salary is not a number.
+        headerMessage(' - Annual Salary is Not a Number');
         return false;
     } else {
         // use newEmployee function to add an employee
+        headerMessage(' ');
         newEmployee( $( '#firstNameIn' ).val(), $( '#lastNameIn' ).val(), $( '#idNumberIn' ).val(), $( '#titleIn' ).val(), $( '#annualSalaryIn' ).val() );
     } // end if
 
@@ -47,17 +45,16 @@ function addEmployee() {
     showEmployee();
     monthlySalaryDisplay();
 
-  } // end addEmployee
-  
-    
-  
+} // end addEmployee
+
+// Creates an entry in the employeeArray
 function newEmployee( firstName, lastName, idNumber, title, annualSalary ){
     console.log( 'in newEmployee:', firstName, lastName, idNumber, title, annualSalary );
     employeeArray.push( new Employee( firstName, lastName, parseFloat(idNumber), title, parseFloat(annualSalary) ) );
     return true;
 } // end newEmployee
 
-// clearing the input fields
+// Clears the input fields
 function clearInput() {
     // clear the values in html
     $( '#firstNameIn' ).val( '' );
@@ -67,7 +64,7 @@ function clearInput() {
     $( '#annualSalaryIn' ).val( '' );
 } // end clearInput
 
-// function to display employees on a table
+// Function to display employees on a table
 function showEmployee() {
     let outputElement = $ ( '#employeeTable' );
     outputElement.empty();
@@ -79,15 +76,14 @@ function showEmployee() {
         '<td>' + employee.idNumber + '</td>' +
         '<td>' + employee.title + '</td>' +
         '<td>' + formatter.format(employee.annualSalary) + '</td>' + 
-        '<td>' + '<button class ="delete">X</button>' + '</tr>');
+        '<td>' + '<button class="btn btn-danger" id="delete">Delete</button>' + '</td>' + '</tr>');
     } // end for of
 } // end showEmployee
 
 // Displays the monthly total
 function monthlySalaryDisplay() {
     monthlySalaryTotal = monthlySalary();
-    let totalSalaryOut = '<div class=".float-right">' + 
-                         'Monthly total: ' + monthlySalaryTotal + '</div>'
+    let totalSalaryOut = '<div>' + 'Monthly total: ' + monthlySalaryTotal + '</div>'
     $( '#monthlySalary' ).html(totalSalaryOut);
 } // end monthlySalaryDisplay
 
@@ -103,16 +99,8 @@ function monthlySalary() {
 
 // Removes a line from the table when delete is clicked. Calls a function to remove the row from employeeArray.
 function removeFromArray() {
-    console.log('Remove the row');
-    console.log(this);
     let rowToRemove =  $(this).parent().siblings().text();
-    console.log(rowToRemove);
-    // console.log(test.search('12'));
     removeEmployee(rowToRemove);
-    // this is the thing that was clicked on
-    // $(this).parent().siblings().remove();
-    // $(this).parent().remove();
-    // parent() will be the li we want to remove
 }
 
 // Removes an employee from employeeArray
@@ -122,15 +110,23 @@ function removeEmployee(rowToDelete) {
                                 employeeArray[i].lastName + 
                                 employeeArray[i].idNumber +
                                 employeeArray[i].title +
-                                employeeArray[i].annualSalary;
-        // console.log(test2);
+                                formatter.format(employeeArray[i].annualSalary);
         if( rowToDelete == currentEmployee ) {
             employeeArray.splice(i, 1);
         } // end if
     } // end for in
+
     showEmployee();
     monthlySalaryDisplay();
+
 } // end removeEmployee
+
+// add display message function
+function headerMessage( text ) {
+    let outputError = $ ( '#headerMessageOut' );
+    outputError.empty();
+    outputError.append( '<h3>Add Employee' + text + '</h3>' );
+} // end 
 
 // Create our number formatter. - Stolen from the internet
 var formatter = new Intl.NumberFormat('en-US', {
