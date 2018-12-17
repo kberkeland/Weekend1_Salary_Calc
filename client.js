@@ -13,7 +13,7 @@ let tableHeaders = '<tr>' + '<th>' + 'First Name' + '</th>' + '<th>' + 'Last Nam
 let monthlySalaryTotal;
 
 $ ( document ).ready( function() {
-    console.log('DOM ready');
+    // console.log('DOM ready');
     
     $ ( '#employeeTable' ).append(tableHeaders);
 
@@ -128,7 +128,7 @@ function headerMessage( text ) {
     let outputError = $ ( '#headerMessageOut' );
     outputError.empty();
     outputError.append( '<h3>Add Employee' + text + '</h3>' );
-} // end 
+} // end headerMessage
 
 // Create our number formatter. - Stolen from the internet
 var formatter = new Intl.NumberFormat('en-US', {
